@@ -38,8 +38,29 @@ b[which.min(y)]
 
 ## Multivariate
 
+Example: (beta-x)^2+7\*|beta1|+7\*|beta1|, x=(1,6)'
 
+Algorithm:
 
+l'=2(beta-x)+7\*(beta1/|beta1|,\*beta2/|beta2|)'
+
+l''=(2,2)'+(7/|beta1|,7/|beta2|)'
+
+beta=beta-l'/l''
+
+```
+x<-c(1,6)
+beta<-c(10,10)
+
+for(ii in 1:100){
+  l1<-2*(beta-x)+7*beta/abs(beta)
+  l2<-rep(2,2)+7/abs(beta)
+  beta<-beta-l1/l2
+}
+beta
+
+optim(c(10,10),function(b)sum((b-x)^2)+7*sum(abs(b)))
+```
 
 ## Group lasso
 
