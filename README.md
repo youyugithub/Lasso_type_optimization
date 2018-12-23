@@ -87,3 +87,19 @@ beta
 
 optim(c(10,10),function(b)sum((b-x)^2)+7*sqrt(sum(b^2)))
 ```
+
+### Adaptive LASSO is not scaling sensitive
+
+```
+x1<-c(1,1,1)
+x2<-c(1,2,4)
+y<-c(0,3,0)
+betaLS<-coef(lm(y~x1+x2-1))
+optim(c(10,10),function(b)sum((y-b[1]*x1-b[2]*x2)^2)+7*abs(b[1])/betaLS[1]+7*abs(b[2])/betaLS[2])$par
+
+x1<-c(1,1,1)
+x2<-c(1,2,4)*2
+y<-c(0,3,0)
+betaLS<-coef(lm(y~x1+x2-1))
+optim(c(10,10),function(b)sum((y-b[1]*x1-b[2]*x2)^2)+7*abs(b[1])/betaLS[1]+7*abs(b[2])/betaLS[2])$par
+```
